@@ -43,5 +43,13 @@
     "seo-analyzer"
   ],
   "author": "Artak Harutyunyan",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artakharutyunyan/react-seo-analyzer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/artakharutyunyan/react-seo-analyzer/issues"
+  },
+  "homepage": "https://github.com/artakharutyunyan/react-seo-analyzer#readme"
 }
