@@ -1,49 +1,35 @@
 {
   "name": "react-seo-analyzer",
-  "version": "1.0.2",
-  "description": "A React SEO Analyzer Component",
+  "version": "1.0.3",
+  "description": "A React SEO Analyzer package.",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "scripts": {
-    "build": "rollup -c",
-    "test": "react-scripts test"
+    "build": "rollup -c --bundleConfigAsCjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
-  },
-  "devDependencies": {
-    "@babel/preset-react": "^7.0.0",
-    "babel-plugin-transform-react-jsx": "^7.0.0",
-    "jest": "^28.0.0",
-    "@testing-library/react": "^13.0.0",
-    "rollup": "^3.0.0",
-    "@rollup/plugin-babel": "^5.0.0",
-    "@rollup/plugin-node-resolve": "^13.0.0",
-    "@rollup/plugin-commonjs": "^22.0.0",
-    "rollup-plugin-peer-deps-external": "^2.2.0"
-  },
-  "peerDependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
-  },
-  "jest": {
-    "preset": "react",
-    "testEnvironment": "jsdom"
-  },
-  "files": [
-    "dist",
-    "src"
-  ],
   "keywords": [
     "react",
     "seo",
-    "analyzer",
-    "seo-analyzer"
+    "analyzer"
   ],
   "author": "Artak Harutyunyan",
   "license": "MIT",
+  "peerDependencies": {
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.9",
+    "@babel/preset-react": "^7.22.5",
+    "@rollup/plugin-babel": "^6.0.0",
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "rollup": "^3.29.5",
+    "rollup-plugin-peer-deps-external": "^2.2.4"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/artakharutyunyan/react-seo-analyzer.git"
