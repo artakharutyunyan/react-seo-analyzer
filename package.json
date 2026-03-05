@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "A React SEO Analyzer package with visual overlay, 20+ checks, and SEO scoring.",
   "main": "dist/index.js",
-  "module": "dist/index.js",
+  "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",

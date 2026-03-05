@@ -18,7 +18,6 @@ export default {
   plugins: [
     peerDepsExternal(),
     resolve({ extensions: ['.js', '.jsx'] }),
-    commonjs(),
     babel({
       babelHelpers: 'bundled',
       extensions: ['.js', '.jsx'],
@@ -27,6 +26,7 @@ export default {
         ['@babel/preset-react', { runtime: 'automatic' }],
       ],
     }),
+    commonjs(),
   ],
   external: ['react', 'react-dom'],
 };
