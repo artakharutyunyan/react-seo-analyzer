@@ -139,7 +139,7 @@ Info     → –1 pt each
 
 ## 🤝 Contributing
 
-Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md).
+Contributions are welcome!
 
 - Fork the repo
 - Create a feature branch

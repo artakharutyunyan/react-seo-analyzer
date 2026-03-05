@@ -8,7 +8,7 @@
 import React from 'react';
 import { render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import SEOAnalyzer from '../src/SEOAnalyzer';
+import SEOAnalyzer from '../src/index';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -33,7 +33,8 @@ afterAll(() => jest.restoreAllMocks());
 function setValidHead(overrides = {}) {
   const defaults = {
     title: 'A perfectly fine page title here',
-    description: 'This is a good meta description that is definitely long enough for SEO purposes and within limits.',
+    description:
+      'This is a good meta description that is definitely long enough for SEO purposes and within limits.',
     canonical: true,
     viewport: true,
     lang: true,
@@ -43,14 +44,15 @@ function setValidHead(overrides = {}) {
   };
   const cfg = { ...defaults, ...overrides };
 
-  if (cfg.title)       document.title = cfg.title;
+  if (cfg.title) document.title = cfg.title;
   if (cfg.description) setMeta('name', 'description', cfg.description);
-  if (cfg.canonical)   setLink('canonical', 'https://example.com');
-  if (cfg.viewport)    setMeta('name', 'viewport', 'width=device-width');
-  if (cfg.lang)        document.documentElement.setAttribute('lang', 'en');
-  if (cfg.ogTitle)     setMeta('property', 'og:title', 'Page Title');
+  if (cfg.canonical) setLink('canonical', 'https://example.com');
+  if (cfg.viewport) setMeta('name', 'viewport', 'width=device-width');
+  if (cfg.lang) document.documentElement.setAttribute('lang', 'en');
+  if (cfg.ogTitle) setMeta('property', 'og:title', 'Page Title');
   if (cfg.ogDescription) setMeta('property', 'og:description', 'Page desc');
-  if (cfg.ogImage)     setMeta('property', 'og:image', 'https://example.com/img.jpg');
+  if (cfg.ogImage)
+    setMeta('property', 'og:image', 'https://example.com/img.jpg');
 }
 
 function setMeta(attr, name, content) {
@@ -68,7 +70,9 @@ function setLink(rel, href) {
 }
 
 function capturedIssues(onIssues) {
-  return new Promise(resolve => onIssues.mockImplementation((issues) => resolve(issues)));
+  return new Promise((resolve) =>
+    onIssues.mockImplementation((issues) => resolve(issues)),
+  );
 }
 
 // ─── Title ────────────────────────────────────────────────────────────────────
@@ -79,7 +83,7 @@ describe('missingTitle', () => {
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).toContain('missingTitle');
+    expect(issues.map((i) => i.id)).toContain('missingTitle');
   });
 
   it('does not flag when title is present', async () => {
@@ -89,7 +93,7 @@ describe('missingTitle', () => {
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).not.toContain('missingTitle');
+    expect(issues.map((i) => i.id)).not.toContain('missingTitle');
   });
 });
 
@@ -101,7 +105,7 @@ describe('titleLength', () => {
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).toContain('titleLength');
+    expect(issues.map((i) => i.id)).toContain('titleLength');
   });
 
   it('warns when title is too long', async () => {
@@ -111,7 +115,7 @@ describe('titleLength', () => {
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).toContain('titleLength');
+    expect(issues.map((i) => i.id)).toContain('titleLength');
   });
 });
 
@@ -123,7 +127,7 @@ describe('missingDescription', () => {
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).toContain('missingDescription');
+    expect(issues.map((i) => i.id)).toContain('missingDescription');
   });
 });
 
@@ -135,7 +139,7 @@ describe('descriptionLength', () => {
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).toContain('descriptionLength');
+    expect(issues.map((i) => i.id)).toContain('descriptionLength');
   });
 });
 
@@ -148,7 +152,7 @@ describe('missingH1', () => {
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).toContain('missingH1');
+    expect(issues.map((i) => i.id)).toContain('missingH1');
   });
 
   it('does not flag when h1 exists', async () => {
@@ -158,7 +162,7 @@ describe('missingH1', () => {
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).not.toContain('missingH1');
+    expect(issues.map((i) => i.id)).not.toContain('missingH1');
   });
 });
 
@@ -170,7 +174,7 @@ describe('multipleH1', () => {
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).toContain('multipleH1');
+    expect(issues.map((i) => i.id)).toContain('multipleH1');
   });
 });
 
@@ -179,12 +183,13 @@ describe('multipleH1', () => {
 describe('imagesWithoutAlt', () => {
   it('flags images missing alt attribute', async () => {
     setValidHead();
-    document.body.innerHTML = '<h1>Hello</h1><img src="a.jpg" /><img src="b.jpg" />';
+    document.body.innerHTML =
+      '<h1>Hello</h1><img src="a.jpg" /><img src="b.jpg" />';
     const onIssues = jest.fn();
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).toContain('imagesWithoutAlt');
+    expect(issues.map((i) => i.id)).toContain('imagesWithoutAlt');
   });
 
   it('does not flag images with alt attribute', async () => {
@@ -194,7 +199,7 @@ describe('imagesWithoutAlt', () => {
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).not.toContain('imagesWithoutAlt');
+    expect(issues.map((i) => i.id)).not.toContain('imagesWithoutAlt');
   });
 });
 
@@ -208,7 +213,7 @@ describe('missingViewport', () => {
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).toContain('missingViewport');
+    expect(issues.map((i) => i.id)).toContain('missingViewport');
   });
 });
 
@@ -222,7 +227,7 @@ describe('missingLang', () => {
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).toContain('missingLang');
+    expect(issues.map((i) => i.id)).toContain('missingLang');
   });
 });
 
@@ -236,7 +241,7 @@ describe('Open Graph tags', () => {
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).toContain('missingOgTitle');
+    expect(issues.map((i) => i.id)).toContain('missingOgTitle');
   });
 
   it('flags missing og:image', async () => {
@@ -246,7 +251,7 @@ describe('Open Graph tags', () => {
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).toContain('missingOgImage');
+    expect(issues.map((i) => i.id)).toContain('missingOgImage');
   });
 });
 
@@ -255,22 +260,24 @@ describe('Open Graph tags', () => {
 describe('externalLinksNoRel', () => {
   it('flags external links without rel attribute', async () => {
     setValidHead();
-    document.body.innerHTML = '<h1>Hello</h1><a href="https://external-site.com">Link</a>';
+    document.body.innerHTML =
+      '<h1>Hello</h1><a href="https://external-site.com">Link</a>';
     const onIssues = jest.fn();
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).toContain('externalLinksNoRel');
+    expect(issues.map((i) => i.id)).toContain('externalLinksNoRel');
   });
 
   it('does not flag external links with noopener', async () => {
     setValidHead();
-    document.body.innerHTML = '<h1>Hello</h1><a href="https://external-site.com" rel="noopener noreferrer">Link</a>';
+    document.body.innerHTML =
+      '<h1>Hello</h1><a href="https://external-site.com" rel="noopener noreferrer">Link</a>';
     const onIssues = jest.fn();
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    expect(issues.map(i => i.id)).not.toContain('externalLinksNoRel');
+    expect(issues.map((i) => i.id)).not.toContain('externalLinksNoRel');
   });
 });
 
@@ -284,12 +291,18 @@ describe('disableRules prop', () => {
         devOnly={false}
         overlay={false}
         onIssues={onIssues}
-        disableRules={['missingTitle', 'missingDescription', 'missingH1', 'missingViewport', 'missingLang']}
-      />
+        disableRules={[
+          'missingTitle',
+          'missingDescription',
+          'missingH1',
+          'missingViewport',
+          'missingLang',
+        ]}
+      />,
     );
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues] = onIssues.mock.calls[0];
-    const ids = issues.map(i => i.id);
+    const ids = issues.map((i) => i.id);
     expect(ids).not.toContain('missingTitle');
     expect(ids).not.toContain('missingDescription');
     expect(ids).not.toContain('missingH1');
@@ -302,7 +315,8 @@ describe('score', () => {
   it('returns 100 when all checks pass', async () => {
     setValidHead();
     document.body.innerHTML = '<h1>Hello</h1>';
-    // Also add twitter, structured data, favicon, canonical already set
+    // Add all remaining info-level tags so score reaches 100
+    setMeta('property', 'og:url', 'https://example.com');
     setMeta('name', 'twitter:card', 'summary');
     setMeta('name', 'twitter:title', 'Title');
     const jsonLd = document.createElement('script');
@@ -329,9 +343,11 @@ describe('score', () => {
     render(<SEOAnalyzer devOnly={false} overlay={false} onIssues={onIssues} />);
     await waitFor(() => expect(onIssues).toHaveBeenCalled());
     const [issues, score] = onIssues.mock.calls[0];
-    const errors = issues.filter(i => i.severity === 'error').length;
-    const warnings = issues.filter(i => i.severity === 'warning').length;
-    const infos = issues.filter(i => i.severity === 'info').length;
-    expect(score).toBe(Math.max(0, 100 - errors * 15 - warnings * 5 - infos * 1));
+    const errors = issues.filter((i) => i.severity === 'error').length;
+    const warnings = issues.filter((i) => i.severity === 'warning').length;
+    const infos = issues.filter((i) => i.severity === 'info').length;
+    expect(score).toBe(
+      Math.max(0, 100 - errors * 15 - warnings * 5 - infos * 1),
+    );
   });
 });
