@@ -7,8 +7,6 @@
 
 > 🔍 A zero-dependency SEO linter for React apps — with a live **visual overlay**, **20+ checks**, and an **SEO score** — all only in development mode.
 
-![react-seo-analyzer overlay demo](https://raw.githubusercontent.com/artakharutyunyan/react-seo-analyzer/master/docs/overlay-demo.gif)
-
 ---
 
 ## ✨ Why react-seo-analyzer?
