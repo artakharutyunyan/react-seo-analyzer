@@ -1,60 +1,155 @@
-# React SEO Analyzer
+# react-seo-analyzer
 
-## Overview
+[![npm version](https://img.shields.io/npm/v/react-seo-analyzer.svg?style=flat-square)](https://www.npmjs.com/package/react-seo-analyzer)
+[![npm downloads](https://img.shields.io/npm/dm/react-seo-analyzer.svg?style=flat-square)](https://www.npmjs.com/package/react-seo-analyzer)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/react-seo-analyzer?style=flat-square)](https://bundlephobia.com/package/react-seo-analyzer)
+[![license](https://img.shields.io/npm/l/react-seo-analyzer.svg?style=flat-square)](./LICENSE)
 
-React SEO Analyzer is a utility package that helps developers identify common SEO issues in their React applications. It checks for missing meta tags, improper alt attributes on images, multiple H1 tags, and more.
+> 🔍 A zero-dependency SEO linter for React apps — with a live **visual overlay**, **20+ checks**, and an **SEO score** — all only in development mode.
 
-## Features
+![react-seo-analyzer overlay demo](https://raw.githubusercontent.com/artakharutyunyan/react-seo-analyzer/master/docs/overlay-demo.gif)
 
-- Detect missing `<title>` tags.
-- Check for a meta description and validate its length.
-- Identify images missing `alt` attributes.
-- Validate the presence of a canonical link.
-- Ensure proper usage of `<h1>` tags.
-- Check external links for proper `rel` attributes (e.g., `nofollow`, `noopener`).
+---
 
-## Installation
+## ✨ Why react-seo-analyzer?
 
-Install the package via npm:
+Most React SEO tools require server-side rendering or manual auditing. **react-seo-analyzer** runs right inside your browser during development — giving you instant, inline feedback **as you build**.
+
+| Feature | react-seo-analyzer | Lighthouse | Other libs |
+|---|---|---|---|
+| Dev-mode overlay | ✅ | ❌ | ❌ |
+| SEO score | ✅ | ✅ | ❌ |
+| 20+ checks | ✅ | ✅ | ⚠️ partial |
+| Zero config | ✅ | ❌ | ⚠️ |
+| Zero dependencies | ✅ | ❌ | ❌ |
+| Auto-disabled in prod | ✅ | N/A | ❌ |
+
+---
+
+## 🚀 Installation
 
 ```bash
 npm install react-seo-analyzer
+# or
+yarn add react-seo-analyzer
 ```
 
-## Usage
+---
 
-Import and use the SEOAnalyzer component in your React application. It analyzes the DOM and logs SEO issues in the console.
+## 🔧 Usage
 
-### Example:
+Drop `<SEOAnalyzer />` anywhere in your app. It renders nothing in production.
 
-```javascript
-import React from 'react';
+```jsx
 import SEOAnalyzer from 'react-seo-analyzer';
 
-const App = () => {
+function App() {
   return (
-    <div>
+    <>
       <SEOAnalyzer />
-      <h1>Welcome to My Website</h1>
-      <p>This is a sample website for demonstrating the React SEO Analyzer.</p>
-    </div>
+      {/* your app */}
+    </>
   );
-};
-
-export default App;
+}
 ```
 
-### Console Output:
+A floating panel will appear in the bottom-right corner showing your **SEO score** and all issues, grouped by category. Click the badge to collapse it.
 
-If issues are found, they will be logged as warnings:
+---
 
-```plaintext
-SEO Analyzer Issues:
-["Missing <title> tag.", "Found 2 images without alt attributes."]
+## ⚙️ Props
+
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `devOnly` | `boolean` | `true` | Only run in `NODE_ENV !== 'production'` |
+| `overlay` | `boolean` | `true` | Show the floating UI panel |
+| `console` | `boolean` | `true` | Also log issues to the browser console |
+| `disableRules` | `string[]` | `[]` | Rule IDs to skip (see list below) |
+| `onIssues` | `function` | — | Callback `(issues, score) => void` |
+
+### Examples
+
+```jsx
+// Disable the overlay, use console output only
+<SEOAnalyzer overlay={false} />
+
+// Disable specific rules
+<SEOAnalyzer disableRules={['missingStructuredData', 'missingTwitterCard']} />
+
+// Use a callback for custom reporting
+<SEOAnalyzer onIssues={(issues, score) => myReporter.send({ issues, score })} />
 ```
 
-If no issues are detected:
+---
 
-```plaintext
-SEO Analyzer: No issues detected.
+## 📋 Checks
+
+### 🔴 Errors (–15 pts each)
+| Rule ID | Description |
+|---|---|
+| `missingTitle` | No `<title>` tag found |
+| `missingDescription` | No meta description |
+| `missingH1` | No `<h1>` on the page |
+| `imagesWithoutAlt` | Images missing `alt` attribute |
+| `missingViewport` | No viewport meta tag |
+| `robotsNoIndex` | Page is set to noindex |
+
+### 🟡 Warnings (–5 pts each)
+| Rule ID | Description |
+|---|---|
+| `titleLength` | Title outside 30–60 character range |
+| `descriptionLength` | Description outside 50–160 character range |
+| `multipleH1` | More than one `<h1>` tag |
+| `missingCanonical` | No canonical link tag |
+| `missingLang` | No `lang` attribute on `<html>` |
+| `missingOgTitle` | No `og:title` Open Graph tag |
+| `missingOgDescription` | No `og:description` Open Graph tag |
+| `missingOgImage` | No `og:image` Open Graph tag |
+| `externalLinksNoRel` | External links missing `rel="noopener noreferrer"` |
+| `headingHierarchy` | Heading levels are skipped |
+
+### 🔵 Info (–1 pt each)
+| Rule ID | Description |
+|---|---|
+| `missingOgUrl` | No `og:url` tag |
+| `missingTwitterCard` | No `twitter:card` tag |
+| `missingTwitterTitle` | No `twitter:title` tag |
+| `missingStructuredData` | No JSON-LD structured data |
+| `missingFavicon` | No favicon link tag |
+
+---
+
+## 📊 Scoring
+
+Your SEO score starts at **100** and points are deducted per issue:
+
 ```
+Errors   → –15 pts each
+Warnings → –5 pts each
+Info     → –1 pt each
+```
+
+| Score | Status |
+|---|---|
+| 80–100 | 🟢 Good |
+| 50–79 | 🟡 Needs work |
+| 0–49 | 🔴 Critical |
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+- Fork the repo
+- Create a feature branch
+- Run tests: `npm test`
+- Submit a PR
+
+Have a rule idea? [Open an issue](https://github.com/artakharutyunyan/react-seo-analyzer/issues).
+
+---
+
+## 📄 License
+
+MIT © [Artak Harutyunyan](https://github.com/artakharutyunyan)

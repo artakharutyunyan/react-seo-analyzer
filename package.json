@@ -1,34 +1,53 @@
 {
   "name": "react-seo-analyzer",
-  "version": "1.0.3",
-  "description": "A React SEO Analyzer package.",
+  "version": "2.0.0",
+  "description": "A React SEO Analyzer package with visual overlay, 20+ checks, and SEO scoring.",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
     "build": "rollup -c --bundleConfigAsCjs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "react",
     "seo",
-    "analyzer"
+    "analyzer",
+    "seo-analyzer",
+    "meta-tags",
+    "open-graph",
+    "accessibility"
   ],
   "author": "Artak Harutyunyan",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
     "@babel/preset-react": "^7.22.5",
     "@rollup/plugin-babel": "^6.0.0",
     "@rollup/plugin-commonjs": "^25.0.0",
     "@rollup/plugin-node-resolve": "^15.0.1",
+    "@testing-library/jest-dom": "^6.0.0",
+    "@testing-library/react": "^16.0.0",
+    "babel-jest": "^29.0.0",
+    "jest": "^29.0.0",
+    "jest-environment-jsdom": "^29.0.0",
     "rollup": "^3.29.5",
     "rollup-plugin-peer-deps-external": "^2.2.4"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "transform": {
+      "^.+\\.[jt]sx?$": "babel-jest"
+    },
+    "setupFilesAfterFramework": [
+      "@testing-library/jest-dom"
+    ]
   },
   "repository": {
     "type": "git",
